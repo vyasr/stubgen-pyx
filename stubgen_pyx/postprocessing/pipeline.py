@@ -18,6 +18,7 @@ from .normalize_member_spacing import normalize_member_spacing
 from .normalize_names import _NameNormalizer
 from .remove_identity_assignment import remove_identity_assignment
 from .sort_imports import sort_imports
+from .strip_artifacts import strip_artifacts
 from .trim_imports import _UnusedImportRemover
 from .trim_not_defined import trim_not_defined
 
@@ -72,6 +73,9 @@ def _ast_transforms(
 
     if config.trim_not_defined:
         trim_not_defined(tree)
+
+    if config.strip_artifacts:
+        tree = strip_artifacts(tree)
 
     if config.trim_imports:
         used_names = collect_names(tree)
