@@ -60,7 +60,7 @@ cdef enum MyCEnum:
     A = 0
     B = 1
 """,
-        expected="from helper import MyCEnum\ndef foo(x: MyCEnum): ...\n",
+        expected="def foo(x: ...): ...\n",
     ),
     Case(
         id="case_05_cpdef_enum_from_module",
@@ -75,7 +75,7 @@ cpdef enum MyCpdefEnum:
     X = 0
     Y = 1
 """,
-        expected="from helper import MyCpdefEnum\ndef foo(x: MyCpdefEnum): ...\n",
+        expected="def foo(x: ...): ...\n",
     ),
     Case(
         id="case_06_ctypedef_from_module",
@@ -89,7 +89,7 @@ def foo(my_id_t x):
 from libc.stdint cimport uint32_t
 ctypedef uint32_t my_id_t
 """,
-        expected="from helper import my_id_t\ndef foo(x: my_id_t): ...\n",
+        expected="def foo(x: ...): ...\n",
     ),
     Case(
         id="case_07_libcpp_bool_baseline",
@@ -171,7 +171,37 @@ from some_module cimport Foo
 cpdef Foo convert(bool x):
     pass
 """,
-        expected="from some_module import Foo\ndef convert(x: bool) -> Foo: ...\n",
+        expected="def convert(x: bool) -> ...: ...\n",
+    ),
+    Case(
+        id="case_15_user_cimport",
+        pyx="""\
+from user_pkg cimport UserClass
+
+def foo(UserClass x):
+    pass
+""",
+        expected="def foo(x: ...): ...\n",
+    ),
+    Case(
+        id="case_16_bare_numpy_cimport",
+        pyx="""\
+cimport numpy
+
+def foo(x):
+    pass
+""",
+        expected="def foo(x): ...\n",
+    ),
+    Case(
+        id="case_17_aliased_bare_numpy_cimport",
+        pyx="""\
+cimport numpy as np
+
+def foo(x):
+    pass
+""",
+        expected="def foo(x): ...\n",
     ),
 ]
 

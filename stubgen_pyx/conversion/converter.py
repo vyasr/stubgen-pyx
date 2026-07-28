@@ -31,9 +31,7 @@ from .type_parsing import extract_type_from_base_type
 from .unparse import unparse_expr
 
 _CIMPORT_RE = re.compile(r"\bcimport\b")
-_CXX_FROM_CIMPORT_RE = re.compile(
-    r"^\s*from\s+(?:libcpp|libc)(?:\.[^\s]+)?\s+cimport\b"
-)
+_CXX_FROM_CIMPORT_RE = re.compile(r"^\s*(?:from\s+\S+\s+)?cimport\b")
 _CXX_CIMPORT_RE = re.compile(r"^\s*cimport\s+(?:libcpp|libc)(?:\.|\b)")
 
 
