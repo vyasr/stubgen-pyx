@@ -78,8 +78,7 @@ def _ast_transforms(
     if config.strip_artifacts:
         tree = strip_artifacts(tree)
 
-    if config.strip_artifacts:
-        tree = validate_annotations(tree)
+    tree = validate_annotations(tree)
 
     if config.trim_imports:
         used_names = collect_names(tree)
