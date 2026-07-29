@@ -75,8 +75,7 @@ def _ast_transforms(
     if config.trim_not_defined:
         trim_not_defined(tree)
 
-    if config.strip_artifacts:
-        tree = strip_artifacts(tree)
+    tree = strip_artifacts(tree)
 
     tree = validate_annotations(tree)
 
